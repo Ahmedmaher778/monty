@@ -1,58 +1,59 @@
 #include "monty.h"
-stack_t *head = NULL;
 
 /**
  * main - entry point
- * @argc: arguments count
- * @argv: list of arguments
+ * @argoc: arguments count
+ * @argov: list of arguments
  * Return: always 0
- */
+*/
 
-int main(int argc, char *argv[])
+int main(int argoc, char *argov[])
 {
-	if (argc != 2)
+	if (argoc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	open_file(argv[1]);
+	open_file(argov[1]);
 	free_nodes();
 	return (0);
 }
 
 /**
  * create_node - Creates a node.
- * @n: Number to go inside the node.
+ * @num: Number to go inside the node.
  * Return: Upon sucess a pointer to the node. Otherwise NULL.
- */
-stack_t *create_node(int n)
-{
-	stack_t *node;
+*/
 
-	node = malloc(sizeof(stack_t));
-	if (node == NULL)
+stack_t *create_node(int num)
+{
+	stack_t *nde;
+
+	nde = malloc(sizeof(stack_t));
+	if (nde == NULL)
 		err(4);
-	node->next = NULL;
-	node->prev = NULL;
-	node->n = n;
-	return (node);
+	nde->next = NULL;
+	nde->prev = NULL;
+	nde->num = num;
+	return (nde);
 }
 
 /**
  * free_nodes - Frees nodes in the stack.
- */
+*/
+
 void free_nodes(void)
 {
-	stack_t *tmp;
+	stack_t *tmpo;
 
 	if (head == NULL)
 		return;
 
 	while (head != NULL)
 	{
-		tmp = head;
+		tmpo = head;
 		head = head->next;
-		free(tmp);
+		free(tmpo);
 	}
 }
 
@@ -60,11 +61,12 @@ void free_nodes(void)
 /**
  * add_to_queue - Adds a node to the queue.
  * @new_node: Pointer to the new node.
- * @ln: line number of the opcode.
- */
-void add_to_queue(stack_t **new_node, __attribute__((unused))unsigned int ln)
+ * @lin: line number of the opcode.
+*/
+
+void add_to_queue(stack_t **new_node, __attribute__((unused))unsigned int lin)
 {
-	stack_t *tmp;
+	stack_t *tmpo;
 
 	if (new_node == NULL || *new_node == NULL)
 		exit(EXIT_FAILURE);
@@ -73,11 +75,11 @@ void add_to_queue(stack_t **new_node, __attribute__((unused))unsigned int ln)
 		head = *new_node;
 		return;
 	}
-	tmp = head;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
+	tmpo = head;
+	while (tmpo->next != NULL)
+		tmpo = tmpo->next;
 
-	tmp->next = *new_node;
-	(*new_node)->prev = tmp;
+	tmpo->next = *new_node;
+	(*new_node)->prev = tmpo;
 
 }
